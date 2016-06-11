@@ -14,7 +14,7 @@ func main() {
 		log.Fatalf("Shit broke")
 	}
 
-	img, err := image.Decode(file)
+	img, _, err := image.Decode(file)
 	if err != nil {
 		log.Fatalf("Shit not good")
 	}
