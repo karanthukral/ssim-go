@@ -18,6 +18,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Shit not good")
 	}
-	index := ssim(x, y)
+	index := ssim(img, img)
 	print(index)
 }

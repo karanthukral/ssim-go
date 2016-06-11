@@ -2,13 +2,13 @@ package main
 
 import (
 	"errors"
-	"fmt"
+	_ "fmt"
 	"image"
 	"image/color"
-	"image/jpeg"
+	_ "image/jpeg"
 	"log"
 	"math"
-	"os"
+	_ "os"
 )
 
 // Default SSIM constants
@@ -28,7 +28,7 @@ func handleErr(err error) {
 
 func dimensions(img image.Image) (width, height int) {
 	bounds := img.Bounds()
-	width, height = bounds.Max.X, bounds.Max.y
+	width, height = bounds.Max.X, bounds.Max.Y
 	return
 }
 
@@ -82,7 +82,7 @@ func stdDev(img image.Image) float64 {
 
 	for x := 0; x < width; x++ {
 		for y := 0; y < height; y++ {
-			pixel = getPixelValue(img.At(x, y))
+			pixel := getPixelValue(img.At(x, y))
 			sum += math.Pow((pixel - avg), 2.0)
 		}
 	}
@@ -100,7 +100,7 @@ func covar(img1, img2 image.Image) (covar float64, err error) {
 	avg2 := mean(img2)
 
 	width, height := dimensions(img1)
-	sum := 0
+	sum := 0.0
 	n := float64((width * height) - 1)
 
 	for x := 0; x < width; x++ {
@@ -111,7 +111,7 @@ func covar(img1, img2 image.Image) (covar float64, err error) {
 		}
 	}
 
-	c = sum / n
+	covar = sum / n
 	return
 }
 
@@ -127,6 +127,6 @@ func ssim(x, y image.Image) float64 {
 
 	num := ((2.0 * avg_x * avg_y) + C1) * ((2.0 * covar) + C2)
 	denominator := (math.Pow(avg_x, 2.0) + math.Pow(avg_y, 2.0) + C1) *
-		(math.Pow(stdev_x, 2.0) + math.Pow(stdev_y, 2.0) + C2)
+		(math.Pow(stdDev_x, 2.0) + math.Pow(stdDev_y, 2.0) + C2)
 	return num / denominator
 }
