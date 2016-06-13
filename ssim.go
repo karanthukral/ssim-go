@@ -116,6 +116,8 @@ func covar(img1, img2 image.Image) (covar float64, err error) {
 }
 
 func ssim(x, y image.Image) float64 {
+	//x = convertToGrayscale(x)
+	//y = convertToGrayscale(y)
 	avg_x := mean(x)
 	avg_y := mean(y)
 
